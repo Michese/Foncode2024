@@ -1,0 +1,16 @@
+
+version: '3.1'
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    network_mode: host
+    volumes:
+      - ./Foncode-front:/Foncode-front
+
+    tty: true
+
+    entrypoint: /bin/zsh
