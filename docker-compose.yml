@@ -12,5 +12,3 @@ services:
       - ./Foncode-front:/Foncode-front
 
     tty: true
-
-    entrypoint: /bin/zsh

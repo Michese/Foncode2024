@@ -14,9 +14,4 @@ ENV LC_CTYPE C.UTF-8
 
 WORKDIR /Foncode-front
 
-COPY Foncode-front/package*.json /Foncode-front
-RUN npm install
-
-COPY /Foncode-front /Foncode-front
-RUN npm run build 
-RUN npm run dev -- --host --port 8081
+CMD npm install --include=dev && npm run build  && npm run dev -- --host --port 8081
