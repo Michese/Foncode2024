@@ -1,7 +1,18 @@
 <template>
-  <h1>Страница не найдена!</h1>
+  <h1>{{ pageNotFoundText }}!</h1>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { useAppStore } from '../stores/app';
+import { getLangText } from '@/utility';
 
-<style lang="scss" scoped></style>
+const appStore = useAppStore();
+const pageNotFoundText = computed(() => getLangText(appStore.lang, 'app.pageNotFound'));
+</script>
+
+<style lang="scss" scoped>
+h1 {
+  padding: 0 20px;
+}
+</style>

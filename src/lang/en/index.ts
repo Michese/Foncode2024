@@ -1,5 +1,9 @@
-import { headerPage } from './headerPage';
+import { app } from './app';
+import { course } from './course';
+import { login } from './login';
 
 export const en = {
-  headerPage,
+  app,
+  login,
+  course,
 };

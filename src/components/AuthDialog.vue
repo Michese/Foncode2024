@@ -2,14 +2,14 @@
   <div class="pa-4 text-center">
     <v-dialog v-model="dialog" max-width="800">
       <template v-slot:activator="{ props: activatorProps }">
-        <v-btn v-bind="activatorProps" text="Войти" @click="openDialog"></v-btn>
+        <v-btn v-bind="activatorProps" :text="loginText" @click="openDialog"></v-btn>
       </template>
 
       <template v-slot:default="{ isActive }">
         <v-card>
           <v-tabs v-model="tab" align-tabs="center">
-            <v-tab value="login">Войти</v-tab>
-            <v-tab value="register">Зарегистрироваться</v-tab>
+            <v-tab value="login">{{ loginText }}</v-tab>
+            <v-tab value="register">{{ registerText }}</v-tab>
           </v-tabs>
 
           <v-card-text>
@@ -32,16 +32,22 @@
 <script lang="ts" setup>
 import PageLogin from './PageLogin.vue';
 import PageRegister from './PageRegister.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useAppStore } from '../stores/app';
+import { getLangText } from '@/utility';
 
 const tab = ref<boolean>(false);
 const dialog = ref<boolean>(false);
+const appStore = useAppStore();
+
+const loginText = computed(() => getLangText(appStore.lang, 'login.login'));
+const registerText = computed(() => getLangText(appStore.lang, 'login.register'));
 
 const openDialog = () => {
   dialog.value = true;
-}
+};
 
 const closeDialog = () => {
   dialog.value = false;
-}
+};
 </script>

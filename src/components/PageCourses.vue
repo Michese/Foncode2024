@@ -2,33 +2,34 @@
   <section class="page-courses">
     <h1 class="page-courses__title">{{ coursesPageText }}</h1>
 
-    <div v-if="loadingList" class="page-courses__loader">
+    <div v-if="coursesStore.loadingList" class="page-courses__loader">
       <v-progress-circular indeterminate color="primary" :size="50"></v-progress-circular>
     </div>
+    <template v-else>
+      <div class="d-flex flex-column" style="gap: 5px">
+        <router-link
+          v-for="course in coursesStore.courses"
+          :key="course.id"
+          :to="`/courses/course/${course.id}`">
+          <v-card class="mx-auto" max-width="700">
+            <v-card-title>{{ course.title }}</v-card-title>
 
-    <div class="d-flex flex-column" style="gap: 5px">
-      <router-link
-        v-for="course in coursesStore.courses"
-        :key="course.id"
-        :to="`/courses/course/${course.id}`">
-        <v-card class="mx-auto" max-width="700">
-          <v-card-title>{{ course.title }}</v-card-title>
+            <v-card-text>
+              <div class="gray--text">
+                {{ course.description }}
+              </div>
+            </v-card-text>
+          </v-card>
+        </router-link>
+      </div>
 
-          <v-card-text>
-            <div class="gray--text">
-              {{ course.description }}
-            </div>
-          </v-card-text>
-        </v-card>
-      </router-link>
-    </div>
-
-    <div v-if="!coursesStore.loadingList" class="text-center">
-      <v-pagination
-        v-model="curPage"
-        :length="totalVisible"
-        :total-visible="5"></v-pagination>
-    </div>
+      <div class="text-center">
+        <v-pagination
+          v-model="curPage"
+          :length="totalVisible"
+          :total-visible="5"></v-pagination>
+      </div>
+    </template>
   </section>
 </template>
 

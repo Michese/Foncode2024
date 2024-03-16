@@ -5,9 +5,9 @@
         v-model="login"
         :rules="loginChecks"
         class="input-group--focused"
-        hint="At least 8 characters"
-        label="Email address"
-        name="input-10-2"></v-text-field>
+        :label="emailText"
+        name="input-10-2"
+        :disabled="loading"></v-text-field>
 
       <v-text-field
         v-model="password"
@@ -15,9 +15,9 @@
         :rules="passwordChecks"
         :type="show2 ? 'text' : 'password'"
         class="input-group--focused"
-        hint="At least 8 characters"
-        label="Password"
+        :label="passwordText"
         name="input-10-2"
+        :disabled="loading"
         @click:append="show2 = !show2"></v-text-field>
 
       <v-btn
@@ -25,9 +25,15 @@
         color="blue"
         size="large"
         variant="tonal"
-        :disabled="!isValidData"
+        :disabled="!isValidData || loading"
         @click="apply">
-        Log In
+        {{ loginText }}
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          color="primary"
+          :size="20"
+          class="ml-1"></v-progress-circular>
       </v-btn>
 
       <v-btn class="mb-8" color="blue" size="large" variant="tonal" block>VK Id</v-btn>
@@ -38,41 +44,57 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user';
 import { computed, ref } from 'vue';
+import { useAppStore } from '../stores/app';
+import { getLangText } from '@/utility';
 
 const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 
+const userStore = useUserStore();
+const appStore = useAppStore();
 const show2 = ref<boolean>(true);
 const login = ref<string>('');
 const password = ref<string>('');
-const rules = {
-  required: (value: string) => !!value || 'Required.',
-  min8: (v: string) => v.length >= 8 || 'Min 8 characters',
+const loading = ref<boolean>();
+const rules = computed(() => ({
+  required: (value: string) => !!value || getLangText(appStore.lang, 'login.required'),
+  min8: (v: string) => v.length >= 8 || getLangText(appStore.lang, 'login.min8'),
   emailMatch: (v: string) =>
-    /[a-zA-Z]+.*@.+/giu.test(v) || "The email you entered don't match",
-};
-const userStore = useUserStore();
+    /[a-zA-Z]+.*@.+/giu.test(v) || getLangText(appStore.lang, 'login.emailMatch'),
+}));
 
-const loginChecks: ((v: string) => boolean | string)[] = [
-  rules.required,
-  rules.emailMatch,
-];
-const passwordChecks: ((v: string) => boolean | string)[] = [rules.required, rules.min8];
+const loginChecks = computed<((v: string) => boolean | string)[]>(() => [
+  rules.value.required,
+  rules.value.emailMatch,
+]);
+const passwordChecks = computed<((v: string) => boolean | string)[]>(() => [
+  rules.value.required,
+  rules.value.min8,
+]);
 
 const isValidData = computed(() => {
   return (
-    loginChecks.every((c) => typeof c(login.value) === 'boolean') &&
-    passwordChecks.every((c) => typeof c(password.value) === 'boolean')
+    loginChecks.value.every((c) => typeof c(login.value) === 'boolean') &&
+    passwordChecks.value.every((c) => typeof c(password.value) === 'boolean')
   );
 });
+
+const loginText = computed(() =>
+  getLangText(appStore.lang, 'login.login').toLocaleUpperCase(),
+);
+const emailText = computed(() => getLangText(appStore.lang, 'login.email'));
+const passwordText = computed(() => getLangText(appStore.lang, 'login.password'));
 
 const apply = async () => {
   if (!isValidData.value) return;
 
+  loading.value = true;
   await userStore.authUser(login.value, password.value);
 
   if (userStore.hasUser) emit('close');
+
+  loading.value = false;
 };
 </script>
 

@@ -13,8 +13,8 @@
 
       <v-card>
         <v-tabs v-model="tab" style="overflow: auto">
-          <v-tab value="files">Файлы</v-tab>
-          <v-tab v-if="course.isTeacher" value="students">Студенты</v-tab>
+          <v-tab value="files">{{ filesText }}</v-tab>
+          <v-tab v-if="course.isTeacher" value="students">{{ studentsText }}</v-tab>
         </v-tabs>
 
         <v-card-text>
@@ -24,7 +24,7 @@
             </v-window-item>
 
             <v-window-item v-if="course.isTeacher" value="students">
-              <page-register />
+              <student-list :id="props.id" />
             </v-window-item>
           </v-window>
         </v-card-text>
@@ -34,17 +34,24 @@
 </template>
 
 <script lang="ts" setup>
+import StudentList from './StudentList.vue';
 import { CourseApi } from '@/api';
 import { Course } from '@/types';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
+import { useAppStore } from '../stores/app';
+import { getLangText } from '@/utility';
 
 const props = defineProps<{
   id: string | number;
 }>();
 
+const appStore = useAppStore();
 const tab = ref<boolean>(false);
 const course = ref<Course | null>(null);
 const loading = ref<boolean>(true);
+
+const filesText = computed(() => getLangText(appStore.lang, 'course.files'));
+const studentsText = computed(() => getLangText(appStore.lang, 'course.students'));
 
 onBeforeMount(async () => {
   course.value = await CourseApi.getCourse(props.id);
