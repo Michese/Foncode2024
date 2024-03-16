@@ -15,13 +15,22 @@
         </nav>
       </div>
 
-      <ha-button>Войти</ha-button>
+      <page-modal>
+        <template v-slot:action>
+          <ha-button>Войти</ha-button>
+        </template>
+
+        
+      </page-modal>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
 import HaButton from '@/ui/HaButton.vue';
+import PageModal from './PageModal.vue';
+import PageLogin from './PageLogin.vue';
+import PageRegister from './PageRegister.vue';
 import { computed, defineEmits, onBeforeMount, ref } from 'vue';
 import { PageLang, PageTheme } from '@/types';
 import { useAppStore } from '@/stores/app';
@@ -56,6 +65,11 @@ const links = ref<
     to: '/',
   },
 ]);
+
+const showLogin = ref<boolean>(true);
+const changeShowing = (isLogin = false) => {
+  showLogin.value = isLogin;
+}
 
 onBeforeMount(async () => {
   await authUser();

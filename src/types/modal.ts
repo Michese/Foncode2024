@@ -1,0 +1,1 @@
+export type ModalPosition = 'full' | 'left' | 'right' | 'top' | 'bottom'
