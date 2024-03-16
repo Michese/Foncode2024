@@ -2,7 +2,7 @@
   <div v-if="loading" class="page-courses__loader">
     <v-progress-circular indeterminate color="primary" :size="50"></v-progress-circular>
   </div>
-  
+
   <v-expansion-panels>
     <v-expansion-panel v-for="studentGroup in studentGroups" :key="studentGroup.id">
       <v-expansion-panel-title>
@@ -13,11 +13,11 @@
         </template>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <v-card title="Nutrition" flat>
+        <v-card flat>
           <template v-slot:text>
             <v-text-field
               v-model="search"
-              label="Search"
+              :label="searchText"
               prepend-inner-icon="mdi-magnify"
               variant="outlined"
               hide-details
@@ -27,7 +27,10 @@
           <v-data-table
             :headers="headers"
             :items="studentGroup.students"
-            :search="search"></v-data-table>
+            :search="search"
+            :no-data-text="noDataAvailableText"
+            :items-per-page-text="itemsPerPageText"
+            item-key="id"></v-data-table>
         </v-card>
       </v-expansion-panel-text>
     </v-expansion-panel>
@@ -37,21 +40,35 @@
 <script lang="ts" setup>
 import { CourseApi } from '@/api';
 import { StudentGroup } from '@/types';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
+import { useAppStore } from '../../stores/app';
+import { getLangText } from '@/utility';
 
 const props = defineProps<{
   id: string | number;
 }>();
 
+const appStore = useAppStore();
 const total = ref<number>(0);
 const studentGroups = ref<StudentGroup[]>([]);
 const loading = ref<boolean>(true);
 const search = ref<string>('');
-const headers = [
-  { key: 'first_name', title: 'Имя' },
-  { key: 'last_name', title: 'Фамилия' },
-  { key: 'middle_name', title: 'Отчество' },
-];
+
+const searchText = computed(() => getLangText(appStore.lang, 'course.search'));
+const noDataAvailableText = computed(() =>
+  getLangText(appStore.lang, 'course.noDataAvailable'),
+);
+const itemsPerPageText = computed(() =>
+  getLangText(appStore.lang, 'course.itemsPerPage'),
+);
+const firstNameText = computed(() => getLangText(appStore.lang, 'course.firstName'));
+const lastNameText = computed(() => getLangText(appStore.lang, 'course.lastName'));
+const patronymicText = computed(() => getLangText(appStore.lang, 'course.patronymic'));
+const headers = computed(() => [
+  { key: 'first_name', title: firstNameText.value },
+  { key: 'last_name', title: lastNameText.value },
+  { key: 'middle_name', title: patronymicText.value },
+]);
 
 onBeforeMount(async () => {
   const { total: totalGroups, items } = await CourseApi.getStudents(props.id);

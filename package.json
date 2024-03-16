@@ -13,6 +13,7 @@
     "@mdi/js": "^7.4.47",
     "axios": "^1.6.7",
     "click-outside-vue3": "^4.0.1",
+    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "vue": "3.3.7",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "@tsconfig/node18": "^18.2.2",
+    "@types/lodash": "^4.17.0",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.62.0",
     "@vitejs/plugin-vue": "^4.0.0",

@@ -30,10 +30,10 @@
 </template>
 
 <script lang="ts" setup>
-import PageLogin from './PageLogin.vue';
-import PageRegister from './PageRegister.vue';
+import PageLogin from './authDialog/PageLogin.vue';
+import PageRegister from './authDialog//PageRegister.vue';
 import { computed, ref } from 'vue';
-import { useAppStore } from '../stores/app';
+import { useAppStore } from '@/stores/app';
 import { getLangText } from '@/utility';
 
 const tab = ref<boolean>(false);

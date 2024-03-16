@@ -5,7 +5,7 @@
     </div>
 
     <template v-else-if="!course">
-      <h2>Предмет не найден!</h2>
+      <h2>{{ courseNotFoundText }}!</h2>
     </template>
     <template v-else>
       <h1>{{ course.title }}</h1>
@@ -20,7 +20,7 @@
         <v-card-text>
           <v-window v-model="tab">
             <v-window-item value="files">
-              <page-login />
+              <file-list :id="props.id" />
             </v-window-item>
 
             <v-window-item v-if="course.isTeacher" value="students">
@@ -34,7 +34,8 @@
 </template>
 
 <script lang="ts" setup>
-import StudentList from './StudentList.vue';
+import StudentList from './pageCourse/StudentList.vue';
+import FileList from './pageCourse/FileList.vue';
 import { CourseApi } from '@/api';
 import { Course } from '@/types';
 import { computed, onBeforeMount, ref } from 'vue';
@@ -52,6 +53,7 @@ const loading = ref<boolean>(true);
 
 const filesText = computed(() => getLangText(appStore.lang, 'course.files'));
 const studentsText = computed(() => getLangText(appStore.lang, 'course.students'));
+const courseNotFoundText = computed(() => getLangText(appStore.lang, 'course.students'));
 
 onBeforeMount(async () => {
   course.value = await CourseApi.getCourse(props.id);

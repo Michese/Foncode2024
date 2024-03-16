@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user';
 import { computed, ref } from 'vue';
-import { useAppStore } from '../stores/app';
+import { useAppStore } from '@/stores/app';
 import { getLangText } from '@/utility';
 
 const emit = defineEmits<{
@@ -99,3 +99,4 @@ const apply = async () => {
 </script>
 
 <style lang="scss" scoped></style>
+../../stores/app

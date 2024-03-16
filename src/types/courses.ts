@@ -16,7 +16,6 @@ export type Course = {
   isTeacher: boolean;
   title: string;
   description: string;
-  files: CourseFile[];
 };
 
 export type Student = {

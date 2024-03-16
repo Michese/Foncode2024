@@ -1,8 +1,9 @@
-import { Course, CourseItem, StudentGroup } from '@/types';
+import { Course, CourseFile, CourseItem, StudentGroup } from '@/types';
 import getCourses from './mock/getCourses';
 import { Api } from './Api';
 import getCourse from './mock/getCourse';
 import getStudents from './mock/getStudents';
+import getFiles from './mock/getFiles';
 
 const useMocks = true;
 
@@ -23,6 +24,20 @@ export class CourseApi extends Api {
     return (await (useMocks
       ? new Promise((res) => res(getCourse()))
       : this.get('course/', { id }))) as Promise<Course>;
+  }
+
+  static async getFiles(payload: {
+    id: string | number;
+    page: number;
+    itemsPerPage: number;
+    sortBy: any;
+  }): Promise<{
+    total: number;
+    items: CourseFile[];
+  }> {
+    return (await (useMocks
+      ? new Promise((res) => res(getFiles()))
+      : this.get('course-files/', payload))) as Promise<any>;
   }
 
   static async getStudents(id: string | number): Promise<{

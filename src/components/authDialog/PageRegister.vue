@@ -5,8 +5,7 @@
     :label="emailText"
     name="input-10-2"
     :rules="loginRules"
-    :disabled="loading"
-     />
+    :disabled="loading" />
 
   <v-text-field
     v-model="firstName"
@@ -62,7 +61,7 @@
 import { UserApi } from '@/api';
 import { useUserStore } from '@/stores/user';
 import { computed, ref } from 'vue';
-import { useAppStore } from '../stores/app';
+import { useAppStore } from '@/stores/app';
 import { getLangText } from '@/utility';
 
 const emit = defineEmits<{
@@ -128,3 +127,4 @@ const apply = async () => {
 </script>
 
 <style lang="scss" scoped></style>
+../../stores/app
