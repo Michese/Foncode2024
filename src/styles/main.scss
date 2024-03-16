@@ -1,0 +1,69 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+input, textarea, select, button {
+    font: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+html {
+    font-family: 'Geometria', "Times New Roman", Times, serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.container {
+    max-width: 1160px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
+// .first-font-color {
+//     color: var(--first-color);
+// }
+
+// .first-bg-color {
+//     background-color: var(--second-color);
+// }
+
+// .second-font-color {
+//     color: var(--second-color);
+// }
+
+// .second-bg-color {
+//     background-color: var(--second-color);
+// }
+
+// .third-font-color {
+//     color: var(--second-color);
+// }
+
+// .third-bg-color {
+//     background-color: var(--second-color);
+// }
+
+
+
