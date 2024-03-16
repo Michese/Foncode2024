@@ -1,5 +1,5 @@
 <template>
-  <h1>Login</h1>
+  <h1>Страница не найдена!</h1>
 </template>
 
 <script lang="ts" setup></script>

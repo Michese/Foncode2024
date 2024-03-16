@@ -2,12 +2,9 @@
   <section class="main-page">
     <h1>Липецкий Государственный Технический университет</h1>
 
-    <v-btn>
-  Button
-</v-btn>
+    <v-btn>Button</v-btn>
   </section>
   <!-- <ha-input v-model="valueRef" label="fsgfsg" /> -->
-
 </template>
 
 <script lang="ts" setup>
@@ -21,6 +18,6 @@ const valueRef = ref<string>('fafs');
 <style lang="scss" scoped>
 .main-page {
   width: 100%;
-  padding: 20px;
+  padding: 0 20px;
 }
 </style>

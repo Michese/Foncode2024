@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { DataForRegisterUser, User } from '@/types';
 import getUser from './mock/getUser';
 import { Api } from './Api';
 
@@ -9,6 +9,12 @@ export class UserApi extends Api {
     return (await (useMocks
       ? new Promise((res) => res(getUser()))
       : this.get('login/', { login, password }))) as Promise<User>;
+  }
+
+  static async registerUser(user: DataForRegisterUser): Promise<User> {
+    return (await (useMocks
+      ? new Promise((res) => res(getUser()))
+      : this.post('register/', user))) as Promise<User>;
   }
 
   static async getUser(): Promise<User> {

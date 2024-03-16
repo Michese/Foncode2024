@@ -1,11 +1,14 @@
 <template>
   <v-layout class="rounded rounded-md">
     <v-navigation-drawer v-model="drawer">
+      <template v-if="userStore.hasUser">
+        <v-list-item :title="fullName"></v-list-item>
+        <v-divider></v-divider>
+      </template>
       <v-list>
         <v-list-item v-for="link of links" :key="link.name" link :to="link.to">
-            {{ link.name }}
+          {{ link.name }}
         </v-list-item>
-
       </v-list>
     </v-navigation-drawer>
 
@@ -18,10 +21,10 @@
         <router-link to="/">{{ logoText }}</router-link>
       </v-app-bar-title>
 
-      <auth-dialog />
+      <auth-dialog v-if="!userStore.hasUser" />
     </v-app-bar>
 
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px">
+    <v-main style="min-height: 300px">
       <RouterView />
     </v-main>
   </v-layout>
@@ -36,13 +39,16 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useAppStore } from './stores/app';
 import { getLangText } from './utility';
 
-const { hasUser, authUser } = useUserStore();
+const userStore = useUserStore();
 
 const drawer = ref<boolean>(true);
 
 const appStore = useAppStore();
 
 const logoText = computed<string>(() => getLangText(appStore.lang, 'headerPage.logo'));
+const fullName = computed<string>(
+  () => `${userStore.user.last_name} ${userStore.user.first_name}`,
+);
 const mainPageText = computed<string>(() =>
   getLangText(appStore.lang, 'headerPage.mainPage'),
 );
@@ -63,8 +69,8 @@ const links = ref<
 ]);
 
 onBeforeMount(async () => {
-  await authUser();
-  if (!hasUser) {
+  await userStore.authUser();
+  if (userStore.hasUser) {
     links.value.push({
       name: coursesPageText.value,
       to: '/courses',
