@@ -9,6 +9,6 @@ services:
 
     network_mode: host
     volumes:
-      - ./Foncode-front:/Foncode-front
+      - .:/Foncode-front
 
     tty: true
