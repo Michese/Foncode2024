@@ -12,9 +12,7 @@ export const useCoursesStore = defineStore('courses', () => {
 
   const findCourses = async (page: number) => {
     loadingList.value = true;
-    console.log('1.0');
     const { total: totalCourses, items } = await CourseApi.getCourses(page, search.value);
-    console.log('1');
     total.value = totalCourses;
     courses.value = items;
     loadingList.value = false;

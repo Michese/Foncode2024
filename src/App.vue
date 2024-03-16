@@ -80,13 +80,6 @@ const themeText = computed<string>(() => getLangText(appStore.lang, 'app.theme')
 const languageText = computed<string>(() => getLangText(appStore.lang, 'app.lang'));
 const logoutText = computed<string>(() => getLangText(appStore.lang, 'app.logout'));
 
-watch(
-  () => mainPageText.value,
-  () => {
-    console.log('watch mainPageText', mainPageText.value);
-  },
-);
-
 const links = computed(() => {
   const arr = [
     {
