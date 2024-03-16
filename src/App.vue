@@ -1,32 +1,76 @@
 <template>
-  <div class="app" id="app-page" :style="themeColors">
-    <header-layout />
-    <main-layout>
+  <v-layout class="rounded rounded-md">
+    <v-navigation-drawer v-model="drawer">
+      <v-list>
+        <v-list-item v-for="link of links" :key="link.name" link :to="link.to">
+            {{ link.name }}
+        </v-list-item>
+
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar :elevation="2">
+      <template v-slot:prepend>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      </template>
+
+      <v-app-bar-title>
+        <router-link to="/">{{ logoText }}</router-link>
+      </v-app-bar-title>
+
+      <auth-dialog />
+    </v-app-bar>
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px">
       <RouterView />
-    </main-layout>
-  </div>
+    </v-main>
+  </v-layout>
 </template>
 
 <script lang="ts" setup>
-import MainLayout from '@/components/MainLayout.vue';
-import HeaderLayout from '@/components/HeaderLayout.vue';
+import AuthDialog from './components/AuthDialog.vue';
 import { RouterView } from 'vue-router';
 
 import { useUserStore } from './stores/user';
-import { computed, onBeforeMount } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useAppStore } from './stores/app';
-import { getColorByTheme } from './utility';
+import { getLangText } from './utility';
 
-const { authUser } = useUserStore();
-const { theme } = useAppStore();
+const { hasUser, authUser } = useUserStore();
 
-const themeColors = computed(() => getColorByTheme(theme));
+const drawer = ref<boolean>(true);
 
-onBeforeMount(() => {
-  // TODO Убрать логин и пароль
-  authUser();
+const appStore = useAppStore();
+
+const logoText = computed<string>(() => getLangText(appStore.lang, 'headerPage.logo'));
+const mainPageText = computed<string>(() =>
+  getLangText(appStore.lang, 'headerPage.mainPage'),
+);
+const coursesPageText = computed<string>(() =>
+  getLangText(appStore.lang, 'headerPage.coursesPage'),
+);
+
+const links = ref<
+  {
+    name: string;
+    to: string;
+  }[]
+>([
+  {
+    name: mainPageText.value,
+    to: '/',
+  },
+]);
+
+onBeforeMount(async () => {
+  await authUser();
+  if (!hasUser) {
+    links.value.push({
+      name: coursesPageText.value,
+      to: '/courses',
+    });
+  }
 });
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
