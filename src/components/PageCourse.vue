@@ -11,7 +11,7 @@
       <h1>{{ course.title }}</h1>
       <span class="d-block mb-3">{{ course.description }}</span>
 
-      <v-card>
+      <v-card class="mb-3">
         <v-tabs v-model="tab" style="overflow: auto">
           <v-tab value="files">{{ filesText }}</v-tab>
           <v-tab v-if="course.isTeacher" value="students">{{ studentsText }}</v-tab>
@@ -29,12 +29,15 @@
           </v-window>
         </v-card-text>
       </v-card>
+
+      <file-upload v-if="course.isTeacher" class="mb-5"></file-upload>
     </template>
   </section>
 </template>
 
 <script lang="ts" setup>
 import StudentList from './pageCourse/StudentList.vue';
+import FileUpload from './pageCourse/FileUpload.vue';
 import FileList from './pageCourse/FileList.vue';
 import { CourseApi } from '@/api';
 import { Course } from '@/types';

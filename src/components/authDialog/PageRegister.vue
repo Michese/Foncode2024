@@ -127,4 +127,3 @@ const apply = async () => {
 </script>
 
 <style lang="scss" scoped></style>
-../../stores/app

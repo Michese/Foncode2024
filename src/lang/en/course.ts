@@ -11,4 +11,7 @@ export const course = {
   firstName: 'First name',
   lastName: 'Last name',
   patronymic: 'Patronymic',
+  add: 'Add file',
+  fileInput: 'File input',
+  fileExist: 'You need to upload at least 1 file',
 };

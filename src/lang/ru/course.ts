@@ -11,4 +11,7 @@ export const course = {
   firstName: 'Имя',
   lastName: 'Фамилия',
   patronymic: 'Отчество',
+  add: 'Добавить файл',
+  fileInput: 'Файл',
+  fileExist: 'Необходимо загрузить минимум 1 файл',
 };

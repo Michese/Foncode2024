@@ -51,4 +51,14 @@ export class CourseApi extends Api {
       items: StudentGroup[];
     }>;
   }
+
+  static async uploadFile(payload: {
+    id: string | number;
+    fileName: string;
+    fileAns: any;
+  }): Promise<boolean> {
+    return (await (useMocks
+      ? new Promise((res) => res(true))
+      : this.post('course/file-upload/', payload))) as Promise<boolean>;
+  }
 }
