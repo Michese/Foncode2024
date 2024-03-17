@@ -62,7 +62,10 @@ const fileAns = ref<any>();
 const openFileText = computed(() => getLangText(appStore.lang, 'course.openFile'));
 
 const isMarkdown = computed(
-  () => fileAns.value?.substring(0, 'data:text/markdown'.length) === 'data:text/markdown',
+  () =>
+    fileAns.value?.substring(0, 'data:text/markdown'.length) === 'data:text/markdown' ||
+    fileAns.value?.substring(0, 'data:application/octet-stream'.length) ===
+      'data:application/octet-stream',
 );
 const markdownValue = ref<string>('');
 const markdownHTML = computed(() => md.render(markdownValue.value));
@@ -118,7 +121,7 @@ onBeforeMount(async () => {
   const fileData = await CourseApi.downloadFile(props.id);
   fileAns.value = fileData.base64;
   fileName.value = fileData.fileName;
-	ext.value = fileData.ext;
+  ext.value = fileData.ext;
   loading.value = false;
 });
 </script>

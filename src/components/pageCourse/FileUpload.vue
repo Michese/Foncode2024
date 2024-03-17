@@ -92,7 +92,8 @@ const isValidData = computed(() => {
 
 const isMarkdown = computed(
   () =>
-  fileAns.value?.substring(0, 'data:text/markdown'.length) === 'data:text/markdown',
+  fileAns.value?.substring(0, 'data:text/markdown'.length) === 'data:text/markdown' ||
+  fileAns.value?.substring(0, 'data:application/octet-stream'.length) === 'data:application/octet-stream'
 );
 const markdownValue = ref<string>('');
 const markdownHTML = computed(() => md.render(markdownValue.value));
