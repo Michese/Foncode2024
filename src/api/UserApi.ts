@@ -2,7 +2,7 @@ import { DataForRegisterUser, User } from '@/types';
 import getUser from './mock/getUser';
 import { Api } from './Api';
 
-const useMocks = false;
+const useMocks = true;
 
 export class UserApi extends Api {
   static async loginByToken(token: string): Promise<User> {
