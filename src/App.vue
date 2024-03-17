@@ -26,8 +26,8 @@
         :items="themes"
         :label="themeText"
         variant="underlined"
-        style="max-width: 70px"
-        class="mr-2"
+        style="max-width: 70px; min-width: 80px"
+        class="mr-2 pt-2"
         @update:model-value="changeTheme"></v-select>
 
       <v-select
@@ -36,6 +36,7 @@
         :label="languageText"
         variant="underlined"
         style="max-width: 60px"
+        class="pt-2"
         @update:model-value="changeLang"></v-select>
 
       <v-btn

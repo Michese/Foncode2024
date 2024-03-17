@@ -21,7 +21,8 @@
         @click:append="show2 = !show2"></v-text-field>
 
       <v-btn
-        class="mb-8"
+        class="mb-4 mt-2 d-block"
+        style="display: block !important;width: 100%;"
         color="blue"
         size="large"
         variant="tonal"
@@ -61,7 +62,7 @@ const emit = defineEmits<{
 
 const userStore = useUserStore();
 const appStore = useAppStore();
-const show2 = ref<boolean>(true);
+const show2 = ref<boolean>(false);
 const login = ref<string>('');
 const password = ref<string>('');
 const loading = ref<boolean>();
