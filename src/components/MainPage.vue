@@ -33,12 +33,15 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
+import { useUserStore } from '@/stores/user';
+
+const userStore = useUserStore();
 
 const emit = defineEmits(['token-event']);
 const urlParams = ref({});
 
-onMounted(() => {
-  const hashParams = window.location.hash.substring(1).split('&');
+onMounted(async () => {
+  const hashParams = window.location.hash.substring(1).split('&'); // /#access_token=vk1.a._zp_1F1nqaimCxWoeze&expires_in=86400&user_id=80732915
   const params = {};
   for (let i = 0; i < hashParams.length; i++) {
     const param = hashParams[i].split('=');
@@ -46,12 +49,18 @@ onMounted(() => {
   }
   urlParams.value = params;
 
-  if ('access_token' in params) emit('token-event', params.access_token);
+  if ('access_token' in params) {
+    const user = await UserApi.loginByToken(params.access_token as string);
+    if (user)
+      userStore.updateUser(user);
+  }
 });
 import { getLangText } from '@/utility';
 import { useAppStore } from '../stores/app';
 import { computed } from 'vue';
 import { main1, main2, main3, main4, main5, main6 } from '@/assets';
+import { UserApi } from '@/api';
+
 
 const appStore = useAppStore();
 

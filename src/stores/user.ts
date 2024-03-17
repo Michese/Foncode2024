@@ -62,5 +62,5 @@ export const useUserStore = defineStore('user', () => {
     user.vk = token;
   }
 
-  return { user, logout, hasUser, authUser };
+  return { user, logout, hasUser, authUser, updateUser };
 });

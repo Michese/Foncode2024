@@ -5,6 +5,11 @@ import { Api } from './Api';
 const useMocks = true;
 
 export class UserApi extends Api {
+  static async loginByToken(token: string): Promise<User> {
+    return (await (useMocks
+      ? new Promise((res) => res(getUser()))
+      : this.get('login/', {token}))) as Promise<User>;
+  }
   static async login(login: string, password: string): Promise<User> {
     return (await (useMocks
       ? new Promise((res) => res(getUser()))
