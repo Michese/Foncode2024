@@ -124,6 +124,7 @@ const descs = computed(() => [desc1.value, desc2.value, desc3.value, desc4.value
     opacity: 0.6;
     display: inline-block;
     max-width: calc(100% - 20px);
+    color: #fff;
 
     & + div {
       & > div {
@@ -135,6 +136,7 @@ const descs = computed(() => [desc1.value, desc2.value, desc3.value, desc4.value
         opacity: 0.6;
         display: inline-block;
         max-width: calc(100% - 20px);
+        color: #fff;
       }
     }
   }
