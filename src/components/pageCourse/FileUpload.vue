@@ -21,6 +21,10 @@
             :rules="fileChecks"
             show-size></v-file-input>
 
+          <v-card v-if="isMarkdown" class="mb-2 overflow-auto" style="max-height: 500px">
+            <v-card-text v-html="markdownHTML"></v-card-text>
+          </v-card>
+
           <v-btn
             color="blue"
             size="large"
@@ -46,6 +50,8 @@ import { computed, ref, watch } from 'vue';
 import { useAppStore } from '@/stores/app';
 import { getLangText } from '@/utility';
 import { CourseApi } from '@/api';
+import markdownit from 'markdown-it';
+const md = markdownit();
 
 const props = defineProps<{
   id: string | number;
@@ -84,6 +90,13 @@ const isValidData = computed(() => {
   );
 });
 
+const isMarkdown = computed(
+  () =>
+  fileAns.value?.substring(0, 'data:text/markdown'.length) === 'data:text/markdown',
+);
+const markdownValue = ref<string>('');
+const markdownHTML = computed(() => md.render(markdownValue.value));
+
 const openDialog = () => {
   dialog.value = true;
 };
@@ -102,7 +115,12 @@ watch(
     reader.readAsDataURL(file.value[0]);
     reader.onload = () => {
       fileAns.value = reader.result;
-      console.log('fileAns.value', fileAns.value);
+      if (isMarkdown.value) {
+        reader.readAsText(file.value[0]);
+        reader.onload = () => {
+          markdownValue.value = reader.result as string;
+        };
+      }
     };
   },
 );
