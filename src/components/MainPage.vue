@@ -2,7 +2,12 @@
   <section class="main-page">
     <h1>{{ lstuText }}</h1>
 
-    <v-carousel height="400" show-arrows="hover" class="mb-3" cycle hide-delimiter-background>
+    <v-carousel
+      height="400"
+      show-arrows="hover"
+      class="mb-3"
+      cycle
+      hide-delimiter-background>
       <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.src" cover>
         <v-sheet color="transparent" height="100%">
           <h2>{{ slide.title }}</h2>
@@ -13,8 +18,13 @@
       </v-carousel-item>
     </v-carousel>
 
-    <v-card v-for="desc in descs" :key="desc" :text="desc" variant="tonal" class="mb-2"></v-card>
-    
+    <v-card
+      v-for="desc in descs"
+      :key="desc"
+      :text="desc"
+      variant="tonal"
+      class="mb-2"></v-card>
+
     <div>
       <p v-for="(value, key) in urlParams" :key="key">{{ key }}: {{ value }}</p>
     </div>
@@ -22,12 +32,9 @@
 </template>
 
 <script lang="ts" setup>
-// import HaInput from '@/ui/HaInput.vue';
-import { VBtn } from 'vuetify/lib/components/index.mjs';
 import { ref, onMounted } from 'vue';
 
-const valueRef = ref<string>('fafs');
-const emit = defineEmits(['token-event'])
+const emit = defineEmits(['token-event']);
 const urlParams = ref({});
 
 onMounted(() => {
@@ -39,9 +46,7 @@ onMounted(() => {
   }
   urlParams.value = params;
 
-  if('access_token' in params)
-    emit('token-event', params.access_token);
-  //   console.log('access_token' in urlParams.value, urlParams.value.access_token)
+  if ('access_token' in params) emit('token-event', params.access_token);
 });
 import { getLangText } from '@/utility';
 import { useAppStore } from '../stores/app';
@@ -135,5 +140,3 @@ const descs = computed(() => [desc1.value, desc2.value, desc3.value, desc4.value
   }
 }
 </style>
-
-<!-- /#access_token=vk1.a._zp_1F1nqaimCxWoeze&expires_in=86400&user_id=80732915 -->
