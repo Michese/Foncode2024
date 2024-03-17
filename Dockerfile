@@ -1,4 +1,4 @@
-FROM node:18.12.1
+FROM node:18.12.1-buster
 
 RUN apt-get update
 
@@ -14,4 +14,4 @@ ENV LC_CTYPE C.UTF-8
 
 WORKDIR /Foncode-front
 
-CMD npm install --include=dev && npm run dev -- --host --port 5173
+CMD npm install --include=dev && npm run dev -- --host 0.0.0.0 --port 5173

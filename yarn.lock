@@ -7,9 +7,9 @@
   "resolved" "https://registry.npmjs.org/@babel/parser/-/parser-7.24.0.tgz"
   "version" "7.24.0"
 
-"@esbuild/win32-x64@0.16.11":
-  "integrity" "sha512-7NcClJIctrO3iRu5CCqwdSBePm8bL2Iu1DYsuOnxuYJ+a1Kv3Wn3MzNdJIrUPLi1yADVwRliRUU/jtMC/tJnJA=="
-  "resolved" "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.16.11.tgz"
+"@esbuild/linux-x64@0.16.11":
+  "integrity" "sha512-CiNialxsjJllrG3ggzOKzSaqQK/De/Mv4g/3r7jxLt01GLerPh0Q3TVTndFG9VfOrR1PdN7Fz5AOV3bE6Isd1Q=="
+  "resolved" "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.16.11.tgz"
   "version" "0.16.11"
 
 "@eslint/eslintrc@^1.4.0":

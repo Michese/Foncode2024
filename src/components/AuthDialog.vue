@@ -36,6 +36,11 @@ import { computed, ref } from 'vue';
 import { useAppStore } from '@/stores/app';
 import { getLangText } from '@/utility';
 
+const token = defineProps({
+  token: String,
+});
+
+
 const tab = ref<boolean>(false);
 const dialog = ref<boolean>(false);
 const appStore = useAppStore();

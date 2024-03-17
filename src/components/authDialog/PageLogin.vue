@@ -36,7 +36,17 @@
           class="ml-1"></v-progress-circular>
       </v-btn>
 
-      <v-btn class="mb-8" color="blue" size="large" variant="tonal" block>VK Id</v-btn>
+      <v-btn 
+        class="mb-8" 
+        color="blue" 
+        size="large" 
+        variant="tonal" 
+        block
+
+        href="https://oauth.vk.com/authorize?client_id=51878132&display=page&redirect_uri=http://localhost&scope=friends&response_type=token"
+      >
+        VK Id
+      </v-btn>
     </v-card>
   </div>
 </template>

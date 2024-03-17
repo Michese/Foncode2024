@@ -47,7 +47,7 @@
     </v-app-bar>
 
     <v-main style="min-height: 300px">
-      <RouterView />
+      <RouterView @token-event="handleVk" />
     </v-main>
   </v-layout>
 </template>
@@ -106,6 +106,10 @@ const changeTheme = appStore.changeTheme;
 
 const logout = async () => {
   await userStore.logout();
+};
+
+const handleVk = () => {
+  // pass to auth dialog
 };
 
 onBeforeMount(async () => {

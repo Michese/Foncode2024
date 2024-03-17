@@ -10,6 +10,7 @@ const initialUser = (): User => ({
   users_password: '',
   users_email: '',
   token: '',
+  vk: '',
 });
 
 export const useUserStore = defineStore('user', () => {
@@ -22,6 +23,7 @@ export const useUserStore = defineStore('user', () => {
     user.users_password = newUser.users_password;
     user.users_email = newUser.users_email;
     user.token = newUser.token;
+    user.vk = newUser.vk;
 
     sessionStorage.setItem(USER_STORAGE_NAME, JSON.stringify({ ...newUser }));
   }
@@ -54,6 +56,10 @@ export const useUserStore = defineStore('user', () => {
     await UserApi.logout();
     sessionStorage.removeItem(USER_STORAGE_NAME);
     updateUser(initialUser());
+  }
+
+  function setVk(token: string) {
+    user.vk = token;
   }
 
   return { user, logout, hasUser, authUser };

@@ -7,8 +7,24 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    network_mode: host
+    # network_mode: host
+    ports:
+      - "80:5173"
+
     volumes:
       - .:/Foncode-front
 
     tty: true
+
+    networks:
+      mynet:
+        ipv4_address: 172.20.0.10
+
+networks:
+ mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
