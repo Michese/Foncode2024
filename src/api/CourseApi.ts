@@ -1,9 +1,10 @@
-import { Course, CourseFile, CourseItem, StudentGroup } from '@/types';
+import { Course, CourseFile, CourseItem, FileDownload, StudentGroup } from '@/types';
 import getCourses from './mock/getCourses';
 import { Api } from './Api';
 import getCourse from './mock/getCourse';
 import getStudents from './mock/getStudents';
 import getFiles from './mock/getFiles';
+import getFile from './mock/getFile';
 
 const useMocks = true;
 
@@ -60,5 +61,11 @@ export class CourseApi extends Api {
     return (await (useMocks
       ? new Promise((res) => res(true))
       : this.post('course/file-upload/', payload))) as Promise<boolean>;
+  }
+
+  static async downloadFile(id: string | number): Promise<FileDownload> {
+    return (await (useMocks
+      ? new Promise((res) => res(getFile()))
+      : this.post('course/file-download/', { id }))) as Promise<FileDownload>;
   }
 }

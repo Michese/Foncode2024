@@ -115,6 +115,9 @@ watch(
     reader.readAsDataURL(file.value[0]);
     reader.onload = () => {
       fileAns.value = reader.result;
+
+      console.log('fileAns.value', fileAns.value);
+
       if (isMarkdown.value) {
         reader.readAsText(file.value[0]);
         reader.onload = () => {
@@ -125,26 +128,10 @@ watch(
   },
 );
 
-const makeTextFile = (text: string) =>
-  new Promise((res) => {
-    {
-      const blob = new Blob([text], { type: 'application/octet-stream' });
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = function () {
-        res(reader.result);
-      };
-    }
-  });
-
 const apply = async () => {
   if (!isValidData.value) return;
 
   loading.value = true;
-
-  if (fileAns.value.substring(0, 4) !== 'data') {
-    fileAns.value = await makeTextFile(fileAns.value);
-  }
 
   const response = await CourseApi.uploadFile({
     id: props.id,

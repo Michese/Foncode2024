@@ -14,4 +14,5 @@ export const course = {
   add: 'Add file',
   fileInput: 'File input',
   fileExist: 'You need to upload at least 1 file',
+  openFile: 'Open file',
 };

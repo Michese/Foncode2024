@@ -30,3 +30,10 @@ export type StudentGroup = {
   title: string;
   students: Student[];
 };
+
+export type FileDownload = {
+  id: number | string;
+  fileName: string;
+  base64: string;
+  ext: string;
+}

@@ -20,11 +20,16 @@
       :loading="loading"
       :items-per-page-text="itemsPerPageText"
       item-key="id"
-      @update:options="loadItems"></v-data-table-server>
+      @update:options="loadItems">
+      <template v-slot:item.open="{ item }">
+        <file-reader class="text-start" :id="item.id" />
+      </template>
+    </v-data-table-server>
   </v-card>
 </template>
 
 <script lang="ts" setup>
+import FileReader from './FileReader.vue';
 import { CourseApi } from '@/api';
 import { useAppStore } from '@/stores/app';
 import { CourseFile } from '@/types';
@@ -53,10 +58,12 @@ const itemsPerPageText = computed(() =>
 const titleText = computed(() => getLangText(appStore.lang, 'course.title'));
 const sizeText = computed(() => getLangText(appStore.lang, 'course.size'));
 const extText = computed(() => getLangText(appStore.lang, 'course.ext'));
+const openFileText = computed(() => getLangText(appStore.lang, 'course.openFile'));
 const headers = computed(() => [
   { key: 'title', title: titleText.value },
   { key: 'size', title: sizeText.value },
   { key: 'ext', title: extText.value },
+  { key: 'open', title: openFileText.value },
 ]);
 
 const loadItems = debounce(({ page, itemsPerPage, sortBy }: any) => {

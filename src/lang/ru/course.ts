@@ -14,4 +14,5 @@ export const course = {
   add: 'Добавить файл',
   fileInput: 'Файл',
   fileExist: 'Необходимо загрузить минимум 1 файл',
+  openFile: 'Открыть файл',
 };
